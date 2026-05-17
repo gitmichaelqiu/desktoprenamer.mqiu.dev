@@ -379,7 +379,7 @@
                                     </a>
                                 </div>
                                 <div class="md:col-span-7">
-                                    <div class="relative w-full overflow-hidden rounded-lg" style="aspect-ratio: 16/9; background: var(--deep-navy);">
+                                    <div class="relative w-full overflow-hidden rounded-lg feature-video" style="aspect-ratio: 16/9; background: var(--deep-navy); box-shadow: 0 20px 60px rgba(0,0,0,0.15);">
                                         <video src="resources/batch-move.mp4" autoplay muted loop playsinline
                                             class="absolute inset-0 w-full h-full object-cover"
                                             ref="raycastVideo"></video>
@@ -692,6 +692,58 @@
                             ScrollTrigger.getAll().forEach(function (st) { st.kill(); });
                             initScrollAnimations();
                             lucide.createIcons();
+                        });
+                    }
+
+                    function initScrollAnimations() {
+                        gsap.utils.toArray('.section-rk:not(#home)').forEach(function (sec) {
+                            var masks = sec.querySelectorAll('.mask-inner');
+                            if (masks.length > 0) {
+                                gsap.from(masks, {
+                                    y: "105%",
+                                    duration: 1.8,
+                                    stagger: 0.15,
+                                    ease: "power4.out",
+                                    scrollTrigger: {
+                                        trigger: sec,
+                                        start: "top 85%",
+                                    }
+                                });
+                            }
+                        });
+
+                        // Screenshot Parallax
+                        gsap.utils.toArray('.screenshot-parallax').forEach(function (wrap) {
+                            var img = wrap.querySelector('.screenshot-parallax-img');
+                            if (!img) return;
+                            gsap.fromTo(img, {
+                                y: "-3%"
+                            }, {
+                                y: "3%",
+                                ease: "none",
+                                scrollTrigger: {
+                                    trigger: wrap,
+                                    start: "top bottom",
+                                    end: "bottom top",
+                                    scrub: true
+                                }
+                            });
+                        });
+
+                        // Gradient Parallax on editorial text
+                        gsap.utils.toArray('.gradient-text').forEach(function (el) {
+                            gsap.fromTo(el, {
+                                backgroundPosition: '0% 50%'
+                            }, {
+                                backgroundPosition: '100% 50%',
+                                ease: 'none',
+                                scrollTrigger: {
+                                    trigger: el,
+                                    start: 'top bottom',
+                                    end: 'bottom top',
+                                    scrub: true
+                                }
+                            });
                         });
                     }
 
@@ -1162,56 +1214,6 @@
                                 .from('.hero__icon-3d', { scale: 0.92, opacity: 0, y: 24, duration: 0.7, ease: "power3.out" }, "-=0.45")
                                 .to('.hero__text .mask-inner', { y: 0, visibility: 'visible', duration: 0.8, stagger: 0.15, ease: "expo.out" }, "-=0.3")
                                 .from('.hero__quicknav', { opacity: 0, duration: 0.5, ease: "power2.out" }, "-=0.3");
-
-                            function initScrollAnimations() {
-                                gsap.utils.toArray('.section-rk:not(#home)').forEach(function (sec) {
-                                    var masks = sec.querySelectorAll('.mask-inner');
-                                    if (masks.length > 0) {
-                                        gsap.from(masks, {
-                                            y: "105%",
-                                            duration: 1.8,
-                                            stagger: 0.15,
-                                            ease: "power4.out",
-                                            scrollTrigger: {
-                                                trigger: sec,
-                                                start: "top 85%",
-                                            }
-                                        });
-                                    }
-                                });
-
-                                // Screenshot Parallax
-                                gsap.utils.toArray('.screenshot-parallax').forEach(function (wrap) {
-                                    var img = wrap.querySelector('.screenshot-parallax-img');
-                                    if (!img) return;
-                                    gsap.fromTo(img, {
-                                        y: "-3%"
-                                    }, {
-                                        y: "3%",
-                                        ease: "none",
-                                        scrollTrigger: {
-                                            trigger: wrap,
-                                            start: "top bottom",
-                                            end: "bottom top",
-                                            scrub: true
-                                        }
-                                    });
-                                });
-
-                                // Gradient Parallax on editorial text
-                                gsap.utils.toArray('.gradient-text').forEach(function (el) {
-                                    gsap.to(el, {
-                                        backgroundPosition: '100% 50%',
-                                        ease: 'none',
-                                        scrollTrigger: {
-                                            trigger: el,
-                                            start: 'top bottom',
-                                            end: 'bottom top',
-                                            scrub: true
-                                        }
-                                    });
-                                });
-                            }
 
                             initScrollAnimations();
 
