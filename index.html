@@ -241,7 +241,7 @@
                 <div class="relative w-full overflow-hidden bg-deep-navy" style="aspect-ratio: 16/9;">
                     <video src="resources/demo-reel.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video>
                     <div class="absolute bottom-0 left-0 right-0 pointer-events-none" style="height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 12%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.03) 55%, transparent 100%);"></div>
-                    <button type="button" @click.prevent="openVideoModal"
+                    <button type="button" @click.prevent="openVideoModal('resources/demo-reel.mp4')"
                         class="absolute bottom-6 right-6 z-10 flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-medium transition-all duration-300 hover:scale-105"
                         style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif; letter-spacing: 0.02em; cursor: pointer;">
                         <i data-lucide="play" class="w-4 h-4 fill-white"></i>
@@ -262,7 +262,7 @@
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                     <div class="video-modal-content relative w-full max-w-[90vw] max-h-[85vh]" style="aspect-ratio: 16/9;">
-                        <video src="resources/demo-reel.mp4" autoplay controls playsinline
+                        <video :src="modalVideoSrc" autoplay controls playsinline
                             class="w-full h-full object-contain rounded-lg"
                             style="box-shadow: 0 25px 80px rgba(0,0,0,0.5);"
                             ref="modalVideo"></video>
@@ -375,6 +375,18 @@
                             {{ t('moreFeatures.raycastLabel') }}
                         </div>
                         <div class="content-body">
+                            <div class="relative w-full overflow-hidden rounded-lg mb-8" style="aspect-ratio: 16/9; background: var(--deep-navy);">
+                                <video src="resources/batch-move.mp4" autoplay muted loop playsinline
+                                    class="absolute inset-0 w-full h-full object-cover"
+                                    ref="raycastVideo"></video>
+                                <div class="absolute bottom-0 left-0 right-0 pointer-events-none" style="height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.05) 50%, transparent 100%);"></div>
+                                <button type="button" @click.prevent="openRaycastVideo"
+                                    class="absolute bottom-6 right-6 z-10 flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-medium transition-all duration-300 hover:scale-105"
+                                    style="background: rgba(0,0,0,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); font-family: 'Inter', sans-serif; letter-spacing: 0.02em; cursor: pointer;">
+                                    <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                                    {{ t('moreFeatures.raycastWatch') }}
+                                </button>
+                            </div>
                             <div class="mask-wrap">
                                 <p class="paragraph-m max-w-2xl mask-inner" style="color: var(--text-primary); font-family: 'Inter', sans-serif;">{{ t('moreFeatures.raycastBody') }}</p>
                             </div>
@@ -723,6 +735,8 @@
                     var navDockBottom = ref('2rem');
                     var showVideoModal = ref(false);
                     var modalVideo = ref(null);
+                    var modalVideoSrc = ref('resources/demo-reel.mp4');
+                    var raycastVideo = ref(null);
                     var brewCopied = ref(false);
                     var icon3dContainer = ref(null);
                     var waveCanvas = ref(null);
@@ -922,7 +936,16 @@
                         if (lenis) lenis.scrollTo(0, { duration: 1.2 });
                     }
 
-                    function openVideoModal() {
+                    function openVideoModal(src) {
+                        modalVideoSrc.value = src || 'resources/demo-reel.mp4';
+                        showVideoModal.value = true;
+                    }
+
+                    function openRaycastVideo() {
+                        if (raycastVideo.value) {
+                            raycastVideo.value.pause();
+                        }
+                        modalVideoSrc.value = 'resources/batch-move.mp4';
                         showVideoModal.value = true;
                     }
 
@@ -1291,8 +1314,11 @@
                         toggleTheme: toggleTheme,
                         showVideoModal: showVideoModal,
                         openVideoModal: openVideoModal,
+                        openRaycastVideo: openRaycastVideo,
                         closeVideoModal: closeVideoModal,
                         modalVideo: modalVideo,
+                        modalVideoSrc: modalVideoSrc,
+                        raycastVideo: raycastVideo,
                         copyBrew: copyBrew,
                         brewCopied: brewCopied,
                         icon3dContainer: icon3dContainer,
