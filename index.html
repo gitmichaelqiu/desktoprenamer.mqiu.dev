@@ -356,6 +356,7 @@
                         <div class="hero__quicknav-col">
                             <div class="hero__quicknav-label">{{ t('quicknav.more') }}</div>
                             <a href="https://mqiu.dev" class="hero__quicknav-link">{{ t('quicknav.portfolio') }}</a>
+                            <a href="https://mqiu.dev/blog" target="_blank" class="hero__quicknav-link">{{ t('quicknav.blog') }}</a>
                             <a href="https://optclicker.mqiu.dev" target="_blank" class="hero__quicknav-link">OptClicker</a>
                             <a href="https://spaceswitcher.mqiu.dev" target="_blank" class="hero__quicknav-link">SpaceSwitcher</a>
                         </div>
@@ -428,10 +429,16 @@
                         <i data-lucide="x" class="w-6 h-6"></i>
                     </button>
                     <div class="video-modal-content relative">
-                        <video :src="modalVideoSrc" autoplay controls playsinline
+                        <video v-show="modalVideoSrc === 'resources/demo-reel.mp4'"
+                            src="resources/demo-reel.mp4" autoplay controls playsinline preload="auto"
                             class="max-w-[90vw] max-h-[85vh] rounded-lg block"
                             style="box-shadow: 0 25px 80px rgba(0,0,0,0.5); background: transparent;"
-                            ref="modalVideo"></video>
+                            ref="modalVideoReel"></video>
+                        <video v-show="modalVideoSrc === 'resources/batch-move.mp4'"
+                            src="resources/batch-move.mp4" autoplay controls playsinline preload="auto"
+                            class="max-w-[90vw] max-h-[85vh] rounded-lg block"
+                            style="box-shadow: 0 25px 80px rgba(0,0,0,0.5); background: transparent;"
+                            ref="modalVideoBatch"></video>
                     </div>
                 </div>
             </transition>
@@ -735,6 +742,7 @@
                         <p class="footer-nav-label" style="margin-bottom:0.35rem;">{{ t('quicknav.more') }}</p>
                         <div class="flex flex-col gap-1">
                             <a href="https://mqiu.dev" class="footer-nav-link">{{ t('quicknav.portfolio') }}</a>
+                            <a href="https://mqiu.dev/blog" target="_blank" class="footer-nav-link">{{ t('quicknav.blog') }}</a>
                             <a href="https://optclicker.mqiu.dev" target="_blank" class="footer-nav-link">{{ t('quicknav.optclicker') }}</a>
                             <a href="https://spaceswitcher.mqiu.dev" target="_blank" class="footer-nav-link">{{ t('quicknav.spaceswitcher') }}</a>
                         </div>
@@ -978,7 +986,8 @@
                     var showNavDock = ref(false);
                     var navDockBottom = ref('2rem');
                     var showVideoModal = ref(false);
-                    var modalVideo = ref(null);
+                    var modalVideoReel = ref(null);
+                    var modalVideoBatch = ref(null);
                     var modalVideoSrc = ref('resources/demo-reel.mp4');
                     var raycastVideo = ref(null);
                     var brewCopied = ref(false);
@@ -1214,14 +1223,23 @@
                             nextTick(function () {
                                 nextTick(function () {
                                     lucide.createIcons();
-                                    if (modalVideo.value) {
-                                        modalVideo.value.play().catch(function () {});
+                                    if (modalVideoSrc.value === 'resources/batch-move.mp4') {
+                                        if (modalVideoBatch.value) {
+                                            modalVideoBatch.value.play().catch(function () {});
+                                        }
+                                    } else {
+                                        if (modalVideoReel.value) {
+                                            modalVideoReel.value.play().catch(function () {});
+                                        }
                                     }
                                 });
                             });
                         } else {
-                            if (modalVideo.value) {
-                                modalVideo.value.pause();
+                            if (modalVideoReel.value) {
+                                modalVideoReel.value.pause();
+                            }
+                            if (modalVideoBatch.value) {
+                                modalVideoBatch.value.pause();
                             }
                         }
                     });
@@ -1547,7 +1565,8 @@
                         openVideoModal: openVideoModal,
                         openRaycastVideo: openRaycastVideo,
                         closeVideoModal: closeVideoModal,
-                        modalVideo: modalVideo,
+                        modalVideoReel: modalVideoReel,
+                        modalVideoBatch: modalVideoBatch,
                         modalVideoSrc: modalVideoSrc,
                         raycastVideo: raycastVideo,
                         copyBrew: copyBrew,
