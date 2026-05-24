@@ -441,12 +441,12 @@
                     </button>
                     <div class="video-modal-content relative">
                         <video v-show="modalVideoSrc === 'resources/demo-reel.mp4'"
-                            src="resources/demo-reel.mp4" autoplay controls playsinline preload="auto"
+                            src="resources/demo-reel.mp4" controls playsinline preload="auto"
                             class="max-w-[90vw] max-h-[85vh] rounded-lg block"
                             style="box-shadow: 0 25px 80px rgba(0,0,0,0.5); background: transparent;"
                             ref="modalVideoReel"></video>
                         <video v-show="modalVideoSrc === 'resources/batch-move.mp4'"
-                            src="resources/batch-move.mp4" autoplay controls playsinline preload="auto"
+                            src="resources/batch-move.mp4" controls playsinline preload="auto"
                             class="max-w-[90vw] max-h-[85vh] rounded-lg block"
                             style="box-shadow: 0 25px 80px rgba(0,0,0,0.5); background: transparent;"
                             ref="modalVideoBatch"></video>
@@ -1235,11 +1235,15 @@
                                 nextTick(function () {
                                     lucide.createIcons();
                                     if (modalVideoSrc.value === 'resources/batch-move.mp4') {
+                                        if (modalVideoReel.value) { modalVideoReel.value.pause(); }
                                         if (modalVideoBatch.value) {
+                                            modalVideoBatch.value.currentTime = 0;
                                             modalVideoBatch.value.play().catch(function () {});
                                         }
                                     } else {
+                                        if (modalVideoBatch.value) { modalVideoBatch.value.pause(); }
                                         if (modalVideoReel.value) {
+                                            modalVideoReel.value.currentTime = 0;
                                             modalVideoReel.value.play().catch(function () {});
                                         }
                                     }
@@ -1434,6 +1438,19 @@
 
                         nextTick().then(function () {
                             lucide.createIcons();
+
+                            // Prevent Safari fullscreen from triggering all videos
+                            var allVideos = document.querySelectorAll('video');
+                            allVideos.forEach(function (vid) {
+                                vid.addEventListener('webkitbeginfullscreen', function () {
+                                    allVideos.forEach(function (v) { if (v !== vid) v.pause(); });
+                                });
+                                vid.addEventListener('webkitendfullscreen', function () {
+                                    allVideos.forEach(function (v) {
+                                        if (v !== vid && v.hasAttribute('autoplay') && v.paused) v.play().catch(function () {});
+                                    });
+                                });
+                            });
 
                             // Reveal body immediately so preloader is visible
                             gsap.set('body', { opacity: 1 });
