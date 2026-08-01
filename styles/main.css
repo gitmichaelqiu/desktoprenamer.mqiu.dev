@@ -359,7 +359,17 @@ html.dark .glass-strong {
 }
 
 .companions-grid .work-card:nth-child(even) {
-    padding-top: 4rem;
+    padding-top: 3rem;
+}
+
+.companions-grid .work-card {
+    gap: 1.5rem;
+    padding: 3rem;
+}
+
+.feature-video {
+    overflow: hidden;
+    border-radius: 0.5rem;
 }
 
 .companion-series-label {
