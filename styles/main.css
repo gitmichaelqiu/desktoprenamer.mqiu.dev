@@ -1306,8 +1306,6 @@ html[lang="zh"] .sidebar-link {
 .preloader-content {
     position: fixed;
     inset: 0;
-    bottom: auto;
-    left: auto;
     align-items: center;
     justify-content: center;
 }
