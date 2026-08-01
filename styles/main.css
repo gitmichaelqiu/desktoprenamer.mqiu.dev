@@ -1345,5 +1345,5 @@ html[lang="zh"] .sidebar-link {
 .preloader-mark-wrap .preloader-text-svg { position: relative; z-index: 1; }
 .preloader-text-svg { text-rendering: geometricPrecision; }
 .preloader-text-base { fill: #ffffff; stroke: none; filter: url(#preloader-outline); }
-.preloader-text-interior { fill: #002fa7; stroke: #002fa7; stroke-width: 0.5px; paint-order: stroke; }
+.preloader-text-interior { fill: #002fa7; filter: url(#preloader-interior-mask); }
 .preloader-text-fill { fill: #ffffff; stroke: #ffffff; stroke-width: 0.3px; paint-order: stroke; }
