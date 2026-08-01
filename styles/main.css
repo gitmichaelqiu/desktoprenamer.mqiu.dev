@@ -1304,6 +1304,7 @@ html[lang="zh"] .sidebar-link {
 
 /* Shared centered domain loader */
 .preloader-content {
+    position: fixed;
     inset: 0;
     bottom: auto;
     left: auto;
