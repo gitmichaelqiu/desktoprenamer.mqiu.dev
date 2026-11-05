@@ -117,9 +117,9 @@
             });
 
             var apps = [
-                { id: 'DesktopRenamer', name: 'DesktopRenamer', desc: 'Customize the name of your current desktop in the menubar.', img: 'resources/works/desktop-renamer.png', fullImg: 'resources/works/desktop-renamer-full.png', fullImgDark: 'resources/works/desktop-renamer-full-dark.png', link: 'https://desktoprenamer.mqiu.dev' },
-                { id: 'OptClick', name: 'OptClicker', desc: 'Simulate right-click via Option key.', img: 'resources/works/opt-clicker.png', fullImg: 'resources/works/opt-clicker-full.png', fullImgDark: 'resources/works/opt-clicker-full-dark.png', link: 'https://optclicker.mqiu.dev' },
-                { id: 'SpaceSwitcher', name: 'SpaceSwitcher', desc: 'Control app visibility across specific workspaces.', img: 'resources/works/space-switcher.png', fullImg: 'resources/works/space-switcher-full.png', fullImgDark: 'resources/works/space-switcher-full-dark.png', link: 'https://spaceswitcher.mqiu.dev' }
+                { id: 'DesktopRenamer', name: 'DesktopRenamer', desc: 'Customize the name of your current desktop in the menubar.', img: 'resources/works/desktop-renamer.webp', fullImg: 'resources/works/desktop-renamer-full.webp', fullImgDark: 'resources/works/desktop-renamer-full-dark.webp', link: 'https://desktoprenamer.mqiu.dev' },
+                { id: 'OptClick', name: 'OptClicker', desc: 'Simulate right-click via Option key.', img: 'resources/works/opt-clicker.webp', fullImg: 'resources/works/opt-clicker-full.webp', fullImgDark: 'resources/works/opt-clicker-full-dark.webp', link: 'https://optclicker.mqiu.dev' },
+                { id: 'SpaceSwitcher', name: 'SpaceSwitcher', desc: 'Control app visibility across specific workspaces.', img: 'resources/works/space-switcher.webp', fullImg: 'resources/works/space-switcher-full.webp', fullImgDark: 'resources/works/space-switcher-full-dark.webp', link: 'https://spaceswitcher.mqiu.dev' }
             ];
 
             var photos = [
@@ -326,7 +326,7 @@
                     //     });
                     // }
 
-                    // ── Animation Sequence (gated on resource preloader) ──
+                    // ── Animation Sequence (starts after the Vue app mounts) ──
                     (window.__resourcesReady || Promise.resolve()).then(function () {
                     var tl = gsap.timeline();
 
